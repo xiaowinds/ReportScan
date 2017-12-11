@@ -1,0 +1,143 @@
+{"plus":{"distribute":{"google":{"permissions":["<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]}}},
+    "@platforms": ["android"],
+    "id": "96999",/*应用的标识，创建应用时自动生成，勿手动修改*/
+    "name": "ReortScan",/*应用名称，程序桌面图标名称*/
+    "version": {
+        "name": "1.0.0",/*应用版本名称*/
+        "code": "20102"
+    },
+    "description": "车间报工",/*应用描述信息*/
+    "icons": {
+        "144": "icon.png"
+    },
+    "launch_path": "Login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+    "developer": {
+        "name": "",/*开发者名称*/
+        "email": "",/*开发者邮箱地址*/
+        "url": ""/*开发者个人主页地址*/
+    },
+    "orientation": [
+        "portrait"
+    ],
+    "permissions": {     
+        
+        "Cache": {
+            "description": "缓存管理"
+        },
+        "Camera": {
+            "description": "摄像头"
+        },
+        "Console": {
+            "description": "调试输出日志"
+        },
+        
+        "Device": {
+            "description": "设备信息"
+        },
+        "Downloader": {
+            "description": "文件下载"
+        },
+        "Events": {
+            "description": "扩展事件"
+        },
+        "File": {
+            "description": "本地文件系统"
+        },      
+        
+        "Invocation": {
+            "description": "Native.js能力"
+        },       
+        
+        
+        "Storage": {
+            "description": "本地数据存储"
+        },
+        "Webview": {
+            "description": "窗口管理"
+        },
+        "NativeObj": {
+            "description": "原生控件"
+        },
+        "NativeUI": {
+            "description": "原生UI控件"
+        },
+        "Navigator": {
+            "description": "浏览器信息"
+        },
+        "Uploader": {
+            "description": "文件上传"
+        },
+        "Runtime": {
+            "description": "运行环境"
+        },
+        "XMLHttpRequest": {
+            "description": "跨域网络请求"
+        },
+        "Zip": {
+            "description": "压缩与解压"
+        },
+        "Barcode": {
+            "description": "二维码扫描"
+        }
+    },
+    "unpackage":[
+        "js/update.json"
+    ],
+	"dependencies": {
+		"pages": {
+			"Login.html": {
+				"resources": [
+					"js/dexie.min.js",
+					"js/jquery-2.1.1.min.js",
+					"js/framework7.min.js",
+					"image/wtx_logo.gif",
+					"js/Common.js",
+					"css/framework7-icons.css",
+					"css/framework7.ios.colors.min.css",
+					"css/framework7.ios.min.css",
+					"js/common2.js",
+					"js/jquery-3.1.1.js",
+					"index.html",
+					"js/jquery-3.1.1.min.js",
+					"mcn-wkp.json"
+				],
+				"refer": [
+					"barcode_scan.html"
+				],
+				"priority": 0
+			},
+			"index.html": {
+				"resources": [
+					"css/framework7-icons.css",
+					"js/jquery-2.1.1.min.js",
+					"js/framework7.js",
+					"css/framework7.ios.colors.min.css",
+					"css/framework7.ios.min.css",
+					"fonts/Framework7Icons-Regular.woff2",
+					"Login.html",
+					"js/jquery-3.1.1.js",
+					"js/update.js"
+				],
+				"refer": [
+					"barcode_scan.html"
+				],
+				"priority": 0
+			},
+			"barcode_scan.html": {
+				"resources": [
+					"css/common.css"
+				],
+				"refer": [],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"plus/barcode.html",
+				"plus/barcode_scan.html",
+				"js/update.json",
+				"js/dexie.js"
+			]
+		}
+	}
+}

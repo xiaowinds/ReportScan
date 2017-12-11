@@ -1,0 +1,759 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>ReportScan</title>
+		<link rel="stylesheet" href="css/framework7.ios.min.css">
+		<link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+		<link rel="stylesheet" href="css/framework7-icons.css">
+		<script type="text/javascript" src="js/common2.js"></script>
+		<style>
+			.page-content {
+				padding-bottom: 20px;
+				padding-top: 20px;
+			}
+			
+			.list-block {
+				margin: 20px 0;
+			}
+			
+			.list-block select {
+				-webkit-appearance: menulist;
+				-moz-appearance: menulist;
+				appearance: menulist;
+			}
+			
+			.content-block {
+				margin: 10px 0;
+			}
+			
+			.content-block-title {
+				margin: 22px 15px 10px;
+			}
+			
+			.picker-items {
+				font-size: 18px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="views tabs toolbar-through">
+			<div id="view-1" class="view view-main tab active">
+				<div class="pages navbar-fixed">
+					<div data-page="index-1" class="page">
+						<div class="navbar">
+							<div class="navbar-inner">
+								<div class="left">
+									<a href="#" class="button button-raised button-fill color-red exit">退出登录</a>
+								</div>
+								<div class="center sliding">车间报工</div>
+								<div class="right">
+									<a href="#" class="button button-raised button-fill color-blue rptsubmit">提交</a>
+								</div>
+
+							</div>
+						</div>
+						<div class="page-content">
+							<div class="list-block">
+								<ul>
+									<li>
+										<div class="item-content" style="text-decoration:underline;font-weight:bolder">
+											请扫描：
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">运转卡条码：</div>
+												<div class="item-input">
+													<input type="text" placeholder="点击扫描" id="txtBarCode" name="txtBarCode" class="scan" data-flag="true" readonly>
+												</div>
+											</div>
+										</div>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">颜色：</div>
+												<div class="item-input">
+													<input type="text" id="txtColour" name="txtColour" readonly>
+												</div>
+											</div>
+										</div>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">加工单号：</div>
+												<div class="item-input">
+													<input type="text" id="txtJobNo" name="txtJobNo" readonly>
+												</div>
+											</div>
+										</div>
+									</li>
+
+								</ul>
+							</div>
+							<div class="list-block">
+								<ul>
+									<li>
+										<div class="item-content" style="text-decoration:underline;font-weight:bolder">
+											请输入：
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">机台：</div>
+												<div class="item-input">
+													<input type="text" placeholder="点击选择" id="txtMcn" name="txtMcn" class="txtPicker" readonly>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">工序：</div>
+												<div class="item-input">
+													<input type="text" placeholder="点击机台选择工序" id="txtWkp" name="txtWkp" class="txtPicker" readonly>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">下道工序</div>
+												<div class="item-input">
+													<input type="text" placeholder="请选择下道工序" readonly id="txtNextWkp">
+
+													<!--<select id="txtNextWkp" name="txtNextWkp"></select>-->
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">领班</div>
+												<div class="item-input">
+													<input type="text" readonly id="txtLB">
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">值班主管</div>
+												<div class="item-input">
+													<select id="ddlZG" name="ddlZG">
+														<option value="51564">郭建江</option>
+														<option value="52828">张恭余</option>
+														<option value="52830">牛福超</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">生产数量</div>
+												<div class="item-input">
+													<input type="number" id="txtNum" name="txtNum" placeholder="请输入生产数量">
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">用车编号</div>
+												<div class="item-input">
+													<input type="text" id="txtNo" name="txtNo" placeholder="请输入用车编号">
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">生产状态</div>
+												<div class="item-input">
+													<select id="ddlPS" name="ddlPS">
+														<option selected>正常</option>
+														<option>返修</option>
+														<option>待处理</option>
+														<option>退回修</option>
+														<option>正常及退回</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">生产次数</div>
+												<div class="item-input">
+													<select id="ddlPT" name="ddlPT">
+														<option selected>1</option>
+														<option>2</option>
+														<option>3</option>
+														<option>4</option>
+														<option>5</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</li>
+
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title label">备注</div>
+												<div class="item-input">
+													<textarea id="txaRemark" placeholder="备注可不输入"></textarea>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="view-2" class="view tab">
+				<div class="navbar navbar-fixed">
+					<div class="navbar-inner">
+						<div class="left">
+							<a href="#" class="button button-raised button-fill color-red exit">退出登录</a>
+						</div>
+						<div class="center sliding">上传报工</div>
+						<div class="right"></div>
+					</div>
+				</div>
+				<div class="pages navbar-through">
+					<div data-page="index-2" class="page">
+						<div class="page-content pull-to-refresh-content">
+							<div class="pull-to-refresh-layer">
+								<div class="preloader"></div>
+								<div class="pull-to-refresh-arrow"></div>
+							</div>
+							<div class="content-block">
+								<div class="row">
+									<div class="col-50">
+										<a href="#" class="button button-big button-fill color-red deleteAll">全部删除</a>
+									</div>
+									<div class="col-50">
+										<a href="#" class="button button-big button-fill color-green uploadAll">全部上传</a>
+									</div>
+								</div>
+							</div>
+							<div class="content-block-title">未上传报工：</div>
+
+							<div class="list-block cards-list accordion-list">
+								<ul></ul>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="view-3" class="view tab">
+				<div class="pages">
+					<div data-page="index-3" class="page">
+						<div class="navbar navbar-fixed">
+							<div class="navbar-inner">
+								<div class="left">
+									<a href="#" class="button button-raised button-fill color-red exit">退出登录</a>
+								</div>
+								<div class="center sliding">更新数据</div>
+								<div class="right">
+									<a href="#" class="button button-raised button-fill color-blue update">更新</a>
+								</div>
+							</div>
+						</div>
+						<div class="page-content">
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="view-4" class="view tab">
+				<div class="pages navbar-fixed">
+					<div data-page="index-4" class="page">
+						<div class="navbar">
+							<div class="navbar-inner">
+								<div class="left">
+									<a href="#" class="button button-raised button-fill color-red exit">退出登录</a>
+								</div>
+								<div class="center sliding">系统设置</div>
+								<div class="right"></div>
+							</div>
+						</div>
+						<div class="page-content">
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Bottom Tabbar-->
+			<div class="toolbar tabbar tabbar-labels">
+				<div class="toolbar-inner">
+					<a href="#view-1" class="tab-link active">
+						<i class="icon f7-icons">camera</i><span class="tabbar-label">车间报工</span>
+					</a>
+					<a href="#view-2" class="tab-link">
+						<i class="icon f7-icons">
+                    cloud_upload<span class="badge bg-red" style="display: none;"></span>
+                </i><span class="tabbar-label">上传报工</span>
+					</a>
+					<a href="#view-3" class="tab-link">
+						<i class="icon f7-icons">cloud_download</i><span class="tabbar-label">更新数据</span>
+					</a>
+					<a href="#view-4" class="tab-link">
+						<i class="icon f7-icons">settings</i><span class="tabbar-label">系统设置</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/framework7.min.js"></script>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/dexie.min.js"></script>
+		<script type="text/javascript" src="js/Common.js"></script>
+		<script type="text/javascript" src="js/update.js"></script>
+		<script type="text/javascript">
+			// Add views
+			var view1 = myApp.addView('#view-1');
+			var view2 = myApp.addView('#view-2');
+			var view3 = myApp.addView('#view-3');
+			var view4 = myApp.addView('#view-4');
+
+			var reports = [];
+			var wkp = {};
+			var mcn = {};
+			var loginUser = {};
+			// Pull to refresh content
+			var ptrContent = $$('.pull-to-refresh-content');
+
+			// Add 'refresh' listener on it
+			ptrContent.on('refresh', function() {
+				setTimeout(refreshList, 1000);
+			});
+			var getSrialNum = function() {
+				if(myApp.device.android) {
+					var build = plus.android.importClass("android.os.Build");
+					var srialNumber = build.SERIAL;
+					return srialNumber;
+				}
+				return "序列号未知";
+			}
+			var getWifiName = function() {
+				if(myApp.device.android) {
+					var wifiManager, wifiInfo;
+					var Context = plus.android.importClass("android.content.Context");
+					var WifiManager = plus.android.importClass("android.net.wifi.WifiManager");
+					var WifiInfo = plus.android.importClass("android.net.wifi.WifiInfo");
+					wifiManager = plus.android.runtimeMainActivity().getSystemService(Context.WIFI_SERVICE);
+					wifiInfo = wifiManager.getConnectionInfo();
+					var ssid = wifiInfo.getSSID() || '';
+					if(ssid.length == 0) {
+						return null;
+					}
+					//一些手机上获取SSID是有值的，但是实际IP为空，真实为未连接
+					var i = parseInt(wifiInfo.getIpAddress());
+					var ipStr = (i & 0xFF) + "." +
+						((i >> 8) & 0xFF) + "." +
+						((i >> 16) & 0xFF) + "." +
+						(i >> 24 & 0xFF);
+					if(ipStr == "0.0.0.0") {
+						return null;
+					}
+
+					if(ssid != "<unknown ssid>" && ssid.toUpperCase() != "0X") {
+						return ssid.replace(/\"/g, "");
+					}
+					return null;
+				}
+				return null;
+			};
+			var Report = function(id, userID, userName, code1, code2, code3, code4, lb, zg, proNum, carNo, proSta, proCount, remark, createDate, classes,srialNum) {
+				this.id = id;
+				this.userID = userID;
+				this.userName = userName;
+				this.code1 = code1;
+				this.code2 = code2;
+				this.code3 = code3;
+				this.code4 = code4;
+				this.lb = lb;
+				this.zg = zg;
+				this.proNum = proNum;
+				this.carNo = carNo;
+				this.proSta = proSta;
+				this.proCount = proCount;
+				this.remark = remark;
+				this.createDate = createDate;
+				this.classes = classes;
+				this.srialNum = srialNum;
+			}
+
+			var ReportSubmit = function(repJson, callbackOK, callbackError) {
+				var wifiName = getWifiName();
+				if(!(wifiName != null && wifiName.toUpperCase().indexOf("WINNITEX") > -1)) {
+					myApp.alert("记录已保存，请链接有效Wifi后再上传", "", callbackError);
+					return false;
+				}
+				myApp.confirm("确定要提交吗", "提交提醒", function(a) {
+					//					var url = "	http://localhost:55860/api/ReportSubmit";
+//					var url = "http://192.168.50.66/api/ReportSubmit";
+					var url = "http://www.winnitex.com/net/PlantJobOrderScanAPI/api/ReportSubmit";
+					$.ajax({
+						url: url,
+						type: "post",
+						data: {
+							"": repJson
+						},
+						beforeSend: function() {
+							myApp.showPreloader("上传中")
+						},
+						complete: function() {
+							myApp.hidePreloader();
+						},
+						success: function(data) {
+							if(data.indexOf("Success") > -1) {
+								myApp.alert("上传成功！", "", callbackOK);
+							} else if(data.indexOf("Fail_") > -1){								
+								myApp.alert(data.replace("Fail_","") , "")
+							}
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							myApp.alert("上传失败,已记录到<上传报工>页面", "", callbackError);
+						}
+					});
+				}, function(b) {
+					return false;
+				});
+			}
+
+			var scaned = function(result) {
+				var objID = sessionStorage.selectedObj;
+				$('#txtBarCode').val(result);
+				if(result.length > 15) {
+//					var url = "http://192.168.50.66/api/ReportSubmit/" + result;
+					//					var url = "	http://localhost:55860/api/ReportSubmit/" + result;
+										var url = "http://www.winnitex.com/net/PlantJobOrderScanAPI/api/ReportSubmit/" + result;
+					$.getJSON(url, function(data) {
+						$('#txtColour').val(data.split('|+|')[1]);
+						$('#txtJobNo').val(data.split('|+|')[0]);
+						$('#txtBarCode').attr("data-flag", data.split('|+|')[2]);
+					}).fail(function(jqXHR, textStatus, errorThrown) {
+						myApp.alert("数据库连接失败，请链接Winnitex再重试!" + jqXHR.responseText || textStatus);
+					});
+				}
+			}
+			var length = 0;
+			var refreshList = function() {
+				length = 0;
+				$('.badge').hide();
+				ptrContent.find('ul').html('');
+				var liHtml = '<li class="card accordion-item swipeout">' +
+					'<a href="#" class="item-content item-link">' +
+					'<div class="card-header item-inner">' +
+					'<div class="avatar">{0}</div>' +
+					'<div class="user flex-column">' +
+					'<div class="time">{1}</div></div></div></a>' +
+					'<div class="card-content accordion-item-content">' +
+					'<div class="card-content-inner">' +
+					'<div class="content-block row">' +
+					'<div>工序：{2}</div><div>下道工序：{3}</div><div>机台：{4}</div>' +
+					'<div>颜色：{5}</div><div>加工单号：{6}</div>' +
+					'<div>生产数量：{7}</div>' +
+					'<div>用车编号：{8}</div><div>生产状态：{9}</div><div>生产次数：{10}</div>' +
+					'<div>备注：{11}</div></div></div></div>' +
+					'<div class="card-footer no-border">' +
+					'<a href="#" class="link delete" data-id="{12}">删除</a>' +
+					'<a href="#" class="link upload" data-id="{12}">上传</a></div></li>';
+				db.report.each(function(ele) {
+					length++;
+					// List item html
+					var itemHTML = liHtml.format(
+						ele.code1, getDateDiff(ele.createDate), wkp[Number(ele.code3)],
+						wkp[Number(ele.code4)], mcn[Number(ele.code2)], ele.colour, ele.jobNo, ele.proNum,
+						ele.carNo, ele.proSta, ele.proCount, ele.remark, ele.id);
+					$('.badge').show().text(length);
+
+					ptrContent.find('ul').prepend(itemHTML);
+
+					$$('.link.delete').off("click").on("click", function() {
+						var pid = $$(this).attr("data-id");
+						myApp.swipeoutDelete($$(this).parents(".swipeout"));
+						db.report.delete(Number(pid));
+						length--;
+						$$('.badge').text(length);
+						if(length === 0) {
+							$$('.badge').hide();
+						}
+					});
+					$$('.link.upload').off("click").click(function() {
+						reports = [];
+						var id = Number($$(this).attr("data-id"));
+						db.report.get(id, function(rp) {
+							reports.push(rp);
+							ReportSubmit(JSON.stringify(reports), function() {
+								$('.link.delete[data-id=' + id + ']').click();
+							}, function() {
+								return false;
+							});
+						});
+
+					});
+				});
+
+				// When loading done, we need to reset it
+				myApp.pullToRefreshDone();
+
+			}
+		</script>
+		<script type="text/javascript">
+			$(window).ready(function() {
+				if(!localStorage.loginInfo) {
+					myApp.alert("请登录", "", function() {
+						window.location = "Login.html";
+					});
+				}
+				if(!myApp.device.android) {
+					$('.scan').removeAttr("readonly").off("click");
+					$('.scan').on("blur", function() {
+						if($(this).val().trim() === "") return;
+						scaned($(this).val());
+					})
+				} else {
+					$('.scan').on("click", function() {
+						clicked('barcode_scan.html', true, true);
+					})
+				}
+				loginUser = JSON.parse(localStorage.loginInfo);
+
+				$('#txtLB').val(loginUser.name).data("id", loginUser.userid);
+				var nextWkp = {};
+				var dpt = [];
+				db.wkp.each(function(ele) {
+					wkp[ele.wkpid] = ele.txt;
+					if(nextWkp[ele.dpt] == null) {
+						nextWkp[ele.dpt] = [];
+						dpt.push(ele.dpt)
+					}
+					nextWkp[ele.dpt].push(ele.txt);
+				}).then(function() {
+					myApp.picker({
+						input: '#txtNextWkp',
+						rotateEffect: true,
+						formatValue: function(picker, values) {
+							return values[1];
+						},
+						toolbarTemplate: '<div class="toolbar">' +
+							'<div class="toolbar-inner">' +
+							'<div class="left"></div>' +
+							'<div class="center">请选择下道工序</div>' +
+							'<div class="right">' +
+							'<a href="#" class="link close-picker">确定</a>' +
+							'</div>' +
+							'</div>' +
+							'</div>',
+						cols: [{
+								textAlign: 'left',
+								values: dpt,
+								onChange: function(picker, country) {
+									if(picker.cols[1].replaceValues) {
+										picker.cols[1].replaceValues(nextWkp[country]);
+									}
+								}
+							},
+							{
+								values: nextWkp[loginUser.dpt],
+								width: 240,
+							},
+						]
+					});
+					db.mcn.each(function(ele) {
+						mcn[ele.mcnid] = ele.txt;
+					}).then(function() {
+						refreshList();
+					});
+
+				});
+
+				var mcnWkp = JSON.parse(localStorage.McnWkp);
+				var mcnArr = [];
+				for(var key in mcnWkp) {
+					mcnArr.push(key);
+				}
+				var myPicker = myApp.picker({
+					input: '.txtPicker',
+					rotateEffect: true,
+					formatValue: function(picker, values) {
+						$$('#txtMcn').val(values[0]);
+						$$('#txtWkp').val(values[1]);
+					},
+					toolbarTemplate: '<div class="toolbar">' +
+						'<div class="toolbar-inner">' +
+						'<div class="left"></div>' +
+						'<div class="center">请选择机台工序</div>' +
+						'<div class="right">' +
+						'<a href="#" class="link close-picker">确定</a>' +
+						'</div>' +
+						'</div>' +
+						'</div>',
+					cols: [{
+							textAlign: 'left',
+							values: mcnArr,
+							onChange: function(picker, country) {
+								if(picker.cols[1].replaceValues) {
+									picker.cols[1].replaceValues(mcnWkp[country]);
+								}
+							}
+						},
+						{
+							values: mcnWkp[mcnArr[0]],
+							width: 180,
+						},
+					]
+				});
+
+				$('.rptsubmit').click(function() {
+					
+//					myApp.alert(getSrialNum());
+					var code1 = $$('#txtBarCode').val();
+
+					if(code1.length < 17 || $('#txtBarCode').attr("data-flag") == "false") {
+						myApp.alert("运转卡条码错误，请重新扫描", "");
+						return false;
+					}
+					var code2 = $$('#txtMcn').val();
+					if(code2.trim() === "") {
+						myApp.alert("请选择机台", "");
+						return false;
+					}
+					for(var key in mcn) {
+						if(mcn[key] == code2) {
+							code2 = key;
+							break;
+						}
+					}
+					var code3 = $$('#txtWkp').val();
+					if(code3.trim() === "") {
+						myApp.alert("请选择工序", "");
+						return false;
+					}
+					for(var key in wkp) {
+						if(wkp[key] == code3) {
+							code3 = key;
+							break;
+						}
+					}
+					var code4 = $$('#txtNextWkp').val();
+					if(code4 === "") {
+						myApp.alert("请选择下道工序", "");
+						return false;
+					}
+					for(var key in wkp) {
+						if(wkp[key] == code4) {
+							code4 = key;
+							break;
+						}
+					}
+
+					var lb = $('#txtLB').data("id");
+					if(lb === "") {
+						myApp.alert("请选择领班", "");
+						return false;
+					}
+					var zg = $$('#ddlZG').val();
+					if(code4 === "") {
+						myApp.alert("请选择主管", "");
+						return false;
+					}
+					var proNum = $$('#txtNum').val();
+					if(!$.isNumeric(proNum)) {
+						myApp.alert("请输入正确的生产数量", "");
+						return false;
+					}
+					var carNo = $$('#txtNo').val();
+					if(carNo.trim() === "") {
+						myApp.alert("请输入用车编号", "");
+						return false;
+					}
+					var proSta = $$('#ddlPS').val();
+					if(proSta === "") {
+						myApp.alert("请选择生产状态", "");
+						return false;
+					}
+					var proCount = $$('#ddlPT').val();
+					if(proCount === "") {
+						myApp.alert("请选择生产次数", "");
+						return false;
+					}
+					var remark = $$('#txaRemark').val();
+					
+					var rep = new Report(0, loginUser.userid, loginUser.name, code1, code2, code3, code4, lb, zg, proNum, carNo, proSta, proCount, remark, Date.parse(new Date()), localStorage.bc, getSrialNum());
+					reports = [];
+					reports.push(rep);
+
+					ReportSubmit(JSON.stringify(reports), function() {
+						location = location;
+					}, function() {
+						var rp = [];
+						rp.push(rep);
+						db.report.bulkAdd(rp);
+						refreshList();
+					});
+				});
+				$('.button.exit').click(function() {
+					localStorage.removeItem("loginInfo");
+					window.location = "Login.html";
+				});
+
+				$('.button.update').click(function() {
+					refreshAll();
+//					checkUpdate();
+				});
+
+				$('.button.deleteAll').click(function() {
+					myApp.confirm("确定要全部删除吗?", "", function() {
+						$(".swipeout").each(function() {
+							myApp.swipeoutDelete(this);
+						})
+						db.report.clear();
+						$$('.badge').text(0).hide();
+					}, function() {
+						return false;
+					})
+
+				});
+				$('.button.uploadAll').click(function() {
+					reports = [];
+					db.report.each(function(ele) {
+						reports.push(ele);
+					}).then(function() {
+						ReportSubmit(JSON.stringify(reports), function() {
+							$(".swipeout").each(function() {
+								myApp.swipeoutDelete(this);
+							})
+							db.report.clear();
+							$$('.badge').text(0).hide();
+						}, function() {
+							return false;
+						});
+					});
+				});
+
+			});
+		</script>
+	</body>
+
+</html>

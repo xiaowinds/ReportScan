@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>员工登录</title>
+		<link rel="stylesheet" href="css/framework7.ios.min.css">
+		<link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+		<link rel="stylesheet" href="css/framework7-icons.css">
+		<script type="text/javascript" src="js/common2.js"></script>
+	</head>
+
+	<body>
+		<div class="navbar" style="height: 100px;">
+			<div class="navbar-inner" style="margin: auto auto;">
+				<div class="left"></div>
+				<div class="center"><img src="image/wtx_logo.gif" class="center"></div>
+				<div class="right"></div>
+			</div>
+		</div>
+		<div class="page-content  list-block" style="height: 100%">
+			<div class="item-content">
+				<div class="item-inner">
+					<div class="item-title label">员工号：</div>
+					<div class="item-input">
+						<input type="text" placeholder="点击选择" id="txtBarCode" class="txtPicker" readonly>
+					</div>
+				</div>
+			</div>
+			<a href="#" class="button button-raised button-fill color-blue login">登录</a>
+		</div>
+		<script type="text/javascript" src="js/framework7.min.js"></script>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/dexie.min.js"></script>
+		<script type="text/javascript" src="js/Common.js"></script>
+
+		<script type="text/javascript">
+			$$('.button.login').click(function() {
+				loginCheck();
+			});
+
+			$(window).ready(function() {
+				if(localStorage.loginInfo) {
+					$$('#txtBarCode').val(JSON.parse(localStorage.loginInfo).name);
+					loginCheck();
+				}
+
+				$.getJSON("mcn-wkp.json", function(data) {
+					localStorage.McnWkp = JSON.stringify(data);
+				});
+
+				var userBc = {
+					"A班": ["王云", "杨伟", "尤建辉", "梁长松"],
+					"B班": ["盛正海", "赵春利", "王文瑞", "王保德"]
+				};
+				var myPicker = myApp.picker({
+					input: '.txtPicker',
+					rotateEffect: true,
+					formatValue: function(picker, values) {
+						localStorage.bc = values[0];
+						return values[1];
+					},
+					toolbarTemplate: '<div class="toolbar">' +
+						'<div class="toolbar-inner">' +
+						'<div class="left"></div>' +
+						'<div class="center">请选择</div>' +
+						'<div class="right">' +
+						'<a href="#" class="link close-picker">确定</a>' +
+						'</div>' +
+						'</div>' +
+						'</div>',
+					cols: [{
+							textAlign: 'left',
+							values: ["A班", "B班"],
+							onChange: function(picker, country) {
+								if(picker.cols[1].replaceValues) {
+									picker.cols[1].replaceValues(userBc[country]);
+								}
+							}
+						},
+						{
+							values: userBc["A班"],
+							width: 180,
+						},
+					]
+				});
+			});
+//
+//			function setBarCode(result, objID) {
+//				$$('#txtBarCode').val(result);
+//				loginCheck();
+//			}
+
+			var loginCheck = function() {
+				var loginName = $$('#txtBarCode').val();
+				db.user.where("name").equals(loginName).first(function(user) {
+					if(typeof user !== "undefined") {
+						localStorage.loginInfo = JSON.stringify(user);
+						$$('.page-content').append('<div style="text-align: center;margin-top:44px;">登录成功，正在跳转....</div>')
+						setTimeout(function() {
+							window.location = "index.html";
+						}, 1000)
+					} else {
+						myApp.alert("登录失败！", "");
+					}
+				})
+			};
+			db.user.count(function(len) {
+				if(len === 0) {
+					refreshAll();
+
+				}
+			});
+
+			function scaned(result) {
+				$$('#txtBarCode').val(result);
+				loginCheck();
+			}
+		</script>
+	</body>
+
+</html>

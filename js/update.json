@@ -1,0 +1,9 @@
+{
+    "appid":"HelloH5",
+    "Android":{
+    	"version":"0.0.1",
+    	"title":"版本更新",
+    	"note":"车间报工系统版本更新",
+    	"url":"http://192.168.50.66/1.apk"
+    }
+}
